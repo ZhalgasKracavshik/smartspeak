@@ -39,8 +39,12 @@ export const geminiService = {
 
                     const data = await response.json();
                     return data.text;
-                } catch (backendError) {
-                    console.warn("Backend API failed, falling back to check for local key...", backendError);
+                } catch (backendError: any) {
+                    console.warn("Backend API failed:", backendError);
+                    // If we have a specific error from the backend, throw that instead of the generic one
+                    if (backendError.message && !backendError.message.includes("Failed to fetch")) {
+                        throw new Error(`Backend Error: ${backendError.message}`);
+                    }
                     throw new Error("API Key is missing. Please add it in Settings or configure the backend.");
                 }
             }

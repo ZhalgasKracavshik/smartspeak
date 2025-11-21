@@ -15,12 +15,9 @@ export const geminiService = {
             const systemInstruction = `${TEACHER_PERSONA}\nCurrent Context: ${context}`;
 
             // 1. Try using the secure backend first (if no direct key or if preferred)
-            // For now, we fallback to backend if apiKey is missing or if we explicitly want to use it.
-            // Since we can't easily check for backend existence, we'll try it if no key is provided.
-
             if (!apiKey) {
                 try {
-                    const response = await fetch('/api/gemini', {
+                    const backendResponse = await fetch('/api/gemini', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -32,20 +29,17 @@ export const geminiService = {
                         }),
                     });
 
-                    if (!response.ok) {
-                        const errorData = await response.json();
+                    if (!backendResponse.ok) {
+                        const errorData = await backendResponse.json();
                         throw new Error(errorData.error || 'Backend API Error');
                     }
 
-                    const data = await response.json();
+                    const data = await backendResponse.json();
                     return data.text;
                 } catch (backendError: any) {
-                    console.warn("Backend API failed:", backendError);
-                    // If we have a specific error from the backend, throw that instead of the generic one
-                    if (backendError.message && !backendError.message.includes("Failed to fetch")) {
-                        throw new Error(`Backend Error: ${backendError.message}`);
-                    }
-                    throw new Error("API Key is missing. Please add it in Settings or configure the backend.");
+                    console.error("Backend API failed:", backendError);
+                    const errorMsg = backendError.message || String(backendError);
+                    throw new Error(`Backend unavailable: ${errorMsg}. Please add API key in Settings.`);
                 }
             }
 

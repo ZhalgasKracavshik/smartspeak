@@ -89,12 +89,16 @@ export function AIChat({ pageContext, isOpen, onToggle }: AIChatProps) {
     setIsLoading(true);
 
     try {
-      if (!apiKey) {
-        throw new Error("API Key missing");
-      }
+      // Convert messages to history format for Gemini
+      const history = messages.slice(1).map(msg => ({
+        role: msg.role === "user" ? "user" : "model",
+        parts: [{ text: msg.content }]
+      }));
 
       const responseText = await geminiService.generateResponse(
         userMessage.content,
+        apiKey, // Pass the key (can be empty, backend will be used)
+        history,
         pageContext || "General App Context"
       );
 

@@ -99,15 +99,15 @@ function AppContent() {
   const getPageContext = () => {
     switch (currentPage) {
       case "flashcards":
-        return "FlashCards - Карточки для запоминания слов";
+        return "FlashCards - Memory cards for learning words";
       case "test-levels":
-        return "TestLevels - Тесты по уровням сложности";
+        return "TestLevels - Tests by difficulty levels";
       case "learning-path":
-        return "LearningPath - Путь освоения с 200 уровнями";
+        return "LearningPath - Learning path with 200 levels";
       case "materials":
-        return "LearningMaterials - Учебные материалы: времена, слова, phrasal verbs";
+        return "LearningMaterials - Learning materials: tenses, words, phrasal verbs";
       default:
-        return "SmartSpeak - AI платформа для изучения английского";
+        return "SmartSpeak - AI platform for learning English";
     }
   };
 

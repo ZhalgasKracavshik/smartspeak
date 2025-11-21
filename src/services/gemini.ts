@@ -46,12 +46,24 @@ export const geminiService = {
             // 2. Use Client-Side Key (Legacy/Dev mode)
             const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({
-                model: "gemini-pro",
-                systemInstruction: systemInstruction
+                model: "gemini-pro"
             });
 
+            // Prepend system instruction to history
+            const fullHistory = [
+                {
+                    role: "user",
+                    parts: [{ text: systemInstruction }]
+                },
+                {
+                    role: "model",
+                    parts: [{ text: "Understood. I will act as SmartSpeak AI, an English teacher." }]
+                },
+                ...history
+            ];
+
             const chat = model.startChat({
-                history: history,
+                history: fullHistory,
                 generationConfig: {
                     maxOutputTokens: 1000,
                 },

@@ -11,13 +11,12 @@ import { FlashCards } from "./components/FlashCards";
 import { TestLevels } from "./components/TestLevels";
 import { LearningPath } from "./components/LearningPath";
 import { LearningMaterials } from "./components/LearningMaterials";
-import { AIChat } from "./components/AIChat";
 import { AchievementsDisplay } from "./components/AchievementsDisplay";
 import { StreakDisplay } from "./components/StreakDisplay";
 import { PronunciationPage } from "./components/PronunciationPage";
 import { AuthModal } from "./components/AuthModal";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { Target, Trophy, BookOpen, Zap, Bot, Award, Flame, LogOut, User } from "lucide-react";
+import { Target, Trophy, BookOpen, Zap, Award, Flame, LogOut, User } from "lucide-react";
 import { getInitialProgress, saveProgress, recordSectionVisit, checkTimeBasedAchievements, UserProgress } from "./data/userProgress";
 import { useStreakFreeze } from "./data/streakSystem";
 import { getUserProgressFromDB, saveUserProgressToDB } from "./services/db";
@@ -26,7 +25,6 @@ type Page = "home" | "learning-path" | "test-levels" | "flashcards" | "materials
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>("home");
-  const [isChatOpen, setIsChatOpen] = useState(true);
   const [userProgress, setUserProgress] = useState<UserProgress>(getInitialProgress);
 
   // Track section visits
@@ -223,15 +221,6 @@ function AppContentInner({
                       <AuthModal />
                     )}
 
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setIsChatOpen(!isChatOpen)}
-                      className="gap-2"
-                    >
-                      <Bot className="size-4" />
-                      AI Помощник
-                    </Button>
                     <SettingsDialog />
                   </div>
                 </div>
@@ -254,12 +243,7 @@ function AppContentInner({
             </footer>
           </div>
 
-          {/* AI Chat */}
-          <AIChat
-            pageContext={getPageContext()}
-            isOpen={isChatOpen}
-            onToggle={() => setIsChatOpen(!isChatOpen)}
-          />
+
         </div>
       </SidebarProvider>
     </SettingsProvider>

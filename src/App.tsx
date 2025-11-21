@@ -203,7 +203,7 @@ function AppContentInner({
                       </div>
                       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
                         <Award className="size-4 text-green-600 dark:text-green-400" />
-                        <span className="font-semibold">{userProgress.achievements.length}</span>
+                        <span className="font-semibold">{userProgress.unlockedAchievements.length}</span>
                       </div>
                     </div>
 

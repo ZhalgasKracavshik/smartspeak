@@ -46,7 +46,7 @@ export const geminiService = {
             // 2. Use Client-Side Key (Legacy/Dev mode)
             const genAI = new GoogleGenerativeAI(apiKey);
             const model = genAI.getGenerativeModel({
-                model: "gemini-pro"
+                model: "gemini-1.5-pro"
             });
 
             // Prepend system instruction to history
